@@ -1,0 +1,99 @@
+# Grouping Data
+
+## Group By
+
+The GROUP BY clause divides the rows returned from the SELECT statement into groups. For each group, you can apply an aggregate function e.g.,  SUM() to calculate the sum of items or COUNT() to get the number of items in the groups.
+
+
+
+Basic Syntax:
+```SQL
+SELECT 
+   column_1, 
+   column_2,
+   ...,
+   aggregate_function(column_3)
+FROM 
+   table_name
+GROUP BY 
+   column_1,
+   column_2,
+   ...;
+ ```
+ 
+ 1. Using `GROUP BY` without an aggregate function
+On its own, GROUP BY just removes duplicate rows from the result
+
+Example:
+ ```SQL
+ SELECT
+   customer_id
+FROM
+   payment
+GROUP BY
+   customer_id;
+ ```
+ 
+ 2. Using `GROUP BY` with `SUM` to aggregate results
+ Sample Data:
+  id | name  | age | address      | salary
+ ----+-------+-----+--------------+--------
+   1 | Paul  |  32 | California   |  20000
+   2 | Allen |  25 | Texas        |  15000
+   3 | Teddy |  23 | Norway       |  20000
+   4 | Mark  |  25 | Rich-Mond    |  65000
+   5 | David |  27 | Texas        |  85000
+   6 | Kim   |  22 | South-Hall   |  45000
+   7 | James |  24 | Houston      |  10000
+   8 | Paul  |  24 | Houston      |  20000
+   9 | James |  44 | Norway       |   5000
+  10 | James |  45 | Texas        |   5000
+ 
+ Since there are 3 instances of James, we can return the sum of all three like so:
+ ```SQL
+SELECT name, SUM(salary) 
+  FROM company 
+  GROUP BY name ORDER BY name;
+```
+Which wil return:
+ name  |  sum
+-------+-------
+ Teddy | 20000
+ Paul  | 40000
+ Mark  | 65000
+ Kim   | 45000
+ James | 20000
+ David | 85000
+ Allen | 15000
+(7 rows)
+
+3. Using `GROUP BY` with `COUNT`
+
+
+## HAVING
+The HAVING clause specifies a search condition for a group or an aggregate. The HAVING clause is often used with the GROUP BY clause to filter groups or aggregates based on a specified condition.
+
+Basic Syntax:
+```SQL
+SELECT
+	column1,
+	aggregate_function (column2)
+FROM
+	table_name
+GROUP BY
+	column1
+HAVING
+	condition;
+```
+
+
+Example using `COUNT`
+https://www.w3resource.com/w3r_images/pgsql-sample-table-employee.gif
+```SQL
+SELECT deptno, AVG(salary)
+FROM employee
+GROUP BY deptno
+HAVING COUNT(*)>3;
+```
+
+https://www.w3resource.com/w3r_images/postgresql-having-example1.png
