@@ -1,0 +1,10 @@
+AVG()
+COUNT()
+MAX
+MIN()
+SUM()
+
+You can use aggregate functions as expressions only in the following clauses:
+
+ SELECT clause.
+ HAVING clause.
